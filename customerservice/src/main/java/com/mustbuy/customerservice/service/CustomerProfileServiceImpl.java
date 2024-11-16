@@ -47,6 +47,9 @@ public class CustomerProfileServiceImpl implements CustomerProfileService{
 
 	@Override
 	public Customer addNewCustomer(Customer customer) {
+		if(!customer.getAddress().isEmpty()) {
+			customer.getAddress().forEach(address -> address.setCustomer(customer));
+		}
 		return customerRepository.save(customer);
 	}
 

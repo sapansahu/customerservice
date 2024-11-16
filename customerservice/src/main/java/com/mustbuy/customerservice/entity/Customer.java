@@ -2,6 +2,8 @@ package com.mustbuy.customerservice.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,6 +22,7 @@ public class Customer {
 	private String firstName;
 	private String lastName;
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
 	private List<Address> address;
 	private long phoneNumber;
 	private String emailAddress;

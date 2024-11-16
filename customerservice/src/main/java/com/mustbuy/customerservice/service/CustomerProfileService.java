@@ -2,7 +2,6 @@ package com.mustbuy.customerservice.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 
 import com.mustbuy.customerservice.bean.CustomerSearchCriteria;
 import com.mustbuy.customerservice.entity.Customer;
