@@ -6,6 +6,13 @@ public class CustomerSearchCriteria {
 	private String firstName;
 	private String lastName;
 	
+	public CustomerSearchCriteria(int customerId, String emailAddress, String firstName, String lastName) {
+		super();
+		this.customerId = customerId;
+		this.emailAddress = emailAddress;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 	public int getCustomerId() {
 		return customerId;
 	}

@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mustbuy.customerservice.bean.CustomerSearchCriteria;
 import com.mustbuy.customerservice.entity.Customer;
 import com.mustbuy.customerservice.service.CustomerProfileService;
 import com.mustbuy.customerservice.util.CustomerException;
@@ -40,6 +42,18 @@ public class CustomerController {
 		return response;
 	}
 	
+	@GetMapping("/getCustomerById/{id}")
+	public ResponseEntity<Customer> getCustomerById(@PathVariable("id") int id){
+		ResponseEntity<Customer> response = null;
+		try {
+			Customer customer = customerService.findCustomerById(new CustomerSearchCriteria(id, null, null, null));
+			response =  new ResponseEntity<>(customer,HttpStatus.OK);
+		} catch (CustomerException e) {
+			logger.error(e.getMessage());
+			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return response;
+	}
 	
 	@PostMapping("/enrollCustomer")
 	public ResponseEntity<Customer> enrollNewCustomer(@RequestBody Customer customer){
@@ -47,7 +61,7 @@ public class CustomerController {
 		
 		try {
 			Customer addedCustomer = customerService.addNewCustomer(customer);
-			response = new ResponseEntity<>(addedCustomer,HttpStatus.OK);
+			response = new ResponseEntity<>(addedCustomer,HttpStatus.CREATED);
 		} catch (CustomerException e) {
 			logger.error(e.getMessage());
 			response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
